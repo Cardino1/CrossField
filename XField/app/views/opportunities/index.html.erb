@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title">All Opportunities</h1>
+    <%= link_to "Submit opportunity", new_opportunity_path, class: "cta-button" %>
+  </div>
+
+  <div class="grid grid-4">
+    <% @opportunities.each do |opportunity| %>
+      <article class="card">
+        <span class="badge"><%= opportunity.opportunity_type_label %></span>
+        <h3><%= opportunity.title %></h3>
+        <p><strong>Contact:</strong> <%= opportunity.full_name %></p>
+        <p><strong>Organization:</strong> <%= opportunity.organization %></p>
+        <div class="text-block">
+          <%= simple_format(opportunity.description) %>
+        </div>
+        <% if opportunity.link.present? %>
+          <p><%= link_to "View details", opportunity.link, target: "_blank", rel: "noopener" %></p>
+        <% end %>
+      </article>
+    <% end %>
+  </div>
+
+  <% if @opportunities.empty? %>
+    <p>No opportunities published yet.</p>
+  <% end %>
+</section>

@@ -1,0 +1,45 @@
+<%= form_with model: [:admin, @opportunity], local: true do |form| %>
+  <% if @opportunity.errors.any? %>
+    <div class="alert">
+      <p><strong>Please fix the following:</strong></p>
+      <ul>
+        <% @opportunity.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-grid two-column">
+    <div>
+      <%= form.label :opportunity_type, "Type" %>
+      <%= form.select :opportunity_type, Opportunity.opportunity_type_options %>
+    </div>
+    <div>
+      <%= form.label :status %>
+      <%= form.select :status, Opportunity.statuses.keys.map { |key| [key.humanize, key] } %>
+    </div>
+    <div>
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
+    <div>
+      <%= form.label :full_name %>
+      <%= form.text_field :full_name %>
+    </div>
+    <div>
+      <%= form.label :organization %>
+      <%= form.text_field :organization %>
+    </div>
+    <div class="full-width">
+      <%= form.label :description %>
+      <%= form.text_area :description %>
+    </div>
+    <div>
+      <%= form.label :link %>
+      <%= form.url_field :link %>
+    </div>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

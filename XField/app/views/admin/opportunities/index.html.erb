@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title">Opportunities</h1>
+    <%= link_to "Create", new_admin_opportunity_path, class: "cta-button" %>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Organization</th>
+        <th>Status</th>
+        <th>Submitted</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @opportunities.each do |opportunity| %>
+        <tr>
+          <td><%= opportunity.title %></td>
+          <td><%= opportunity.opportunity_type_label %></td>
+          <td><%= opportunity.organization %></td>
+          <td><%= opportunity.status.humanize %></td>
+          <td><%= opportunity.created_at.to_formatted_s(:long) %></td>
+          <td><%= link_to "View", admin_opportunity_path(opportunity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

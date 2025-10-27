@@ -1,0 +1,21 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title"><%= @article.title %></h1>
+    <div class="nav-links">
+      <%= link_to "Edit", edit_admin_article_path(@article) %>
+      <%= button_to "Delete", admin_article_path(@article), method: :delete, data: { confirm: "Delete this article?" } %>
+    </div>
+  </div>
+  <p><em>By <%= @article.author %> • <%= @article.published_at.to_formatted_s(:long) %></em></p>
+  <p><strong>Summary:</strong></p>
+  <div class="text-block">
+    <%= simple_format(@article.summary) %>
+  </div>
+  <p><strong>Content:</strong></p>
+  <div class="text-block">
+    <%= simple_format(@article.content) %>
+  </div>
+  <% if @article.link.present? %>
+    <p><%= link_to "External link", @article.link, target: "_blank", rel: "noopener" %></p>
+  <% end %>
+</section>

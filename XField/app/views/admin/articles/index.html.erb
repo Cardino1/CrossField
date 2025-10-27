@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title">Articles</h1>
+    <%= link_to "New article", new_admin_article_path, class: "cta-button" %>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Published</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |article| %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%= article.author %></td>
+          <td><%= article.published_at&.to_date %></td>
+          <td><%= link_to "View", admin_article_path(article) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

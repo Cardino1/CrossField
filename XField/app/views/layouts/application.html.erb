@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XField</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">XField</div>
+      <nav class="nav-links">
+        <%= link_to "Home", root_path %>
+        <%= link_to "Opportunities", opportunities_path %>
+        <%= link_to "Investors", investors_path %>
+        <%= link_to "News", news_index_path %>
+        <%= link_to "Admin", admin_root_path %>
+        <%= link_to "Get Updates", "#updates", class: "cta-button" %>
+      </nav>
+    </header>
+
+    <main>
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert"><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+
+    <footer class="footer">
+      © <%= Time.current.year %> XField. All rights reserved.
+    </footer>
+  </body>
+</html>

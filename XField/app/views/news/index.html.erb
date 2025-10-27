@@ -1,0 +1,26 @@
+<section class="section">
+  <h1 class="section-title">Tech Insights & News</h1>
+  <p>Fresh analysis from the XField editorial team.</p>
+
+  <div class="grid grid-3">
+    <% @articles.each do |article| %>
+      <article class="card" id="article-<%= article.id %>">
+        <span class="badge"><%= article.published_at.to_date.to_formatted_s(:long) %></span>
+        <h3><%= article.title %></h3>
+        <p><em>By <%= article.author %></em></p>
+        <div class="text-block">
+          <%= simple_format(article.summary) %>
+        </div>
+        <% if article.link.present? %>
+          <p><%= link_to "Read full article", article.link, target: "_blank", rel: "noopener" %></p>
+        <% else %>
+          <p><em>Full article coming soon.</em></p>
+        <% end %>
+      </article>
+    <% end %>
+  </div>
+
+  <% if @articles.empty? %>
+    <p>No articles yet. Stay tuned for our first drop!</p>
+  <% end %>
+</section>

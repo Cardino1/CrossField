@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title"><%= @opportunity.title %></h1>
+    <div class="nav-links">
+      <%= link_to "Edit", edit_admin_opportunity_path(@opportunity) %>
+      <%= button_to "Delete", admin_opportunity_path(@opportunity), method: :delete, data: { confirm: "Delete this opportunity?" } %>
+    </div>
+  </div>
+  <p><span class="badge"><%= @opportunity.opportunity_type_label %></span></p>
+  <p><strong>Status:</strong> <%= @opportunity.status.humanize %></p>
+  <p><strong>Submitted by:</strong> <%= @opportunity.full_name %> • <%= @opportunity.organization %></p>
+  <div class="text-block">
+    <%= simple_format(@opportunity.description) %>
+  </div>
+  <% if @opportunity.link.present? %>
+    <p><%= link_to "External link", @opportunity.link, target: "_blank", rel: "noopener" %></p>
+  <% end %>
+  <div class="nav-links">
+    <%= button_to "Approve", approve_admin_opportunity_path(@opportunity), method: :patch %>
+    <%= button_to "Reject", reject_admin_opportunity_path(@opportunity), method: :patch, data: { confirm: "Reject this opportunity?" } %>
+  </div>
+</section>
