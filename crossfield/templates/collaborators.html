@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <h1>Find collaborators</h1>
+    <p>Connect with researchers who are actively looking to partner on new dataset initiatives.</p>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('collaborators.profile') }}" class="button primary">Update your collaboration preferences</a>
+    {% else %}
+      <a href="{{ url_for('auth.register') }}" class="button primary">Join the community</a>
+    {% endif %}
+  </section>
+
+  <section class="filters">
+    <form method="get" class="filter-form">
+      <label for="search">Search by name, expertise, or organization</label>
+      <input type="search" id="search" name="search" value="{{ search }}" placeholder="e.g. genomics, climate modeling" />
+      <button type="submit" class="button">Search</button>
+    </form>
+  </section>
+
+  <section class="collaborator-list">
+    {% if collaborators %}
+      {% for collaborator in collaborators %}
+        <article class="collaborator-card">
+          <h2>{{ collaborator.username }}</h2>
+          <p class="collaborator-meta">
+            {{ collaborator.expertise or 'Expertise not specified' }}
+            {% if collaborator.organization %}&middot; {{ collaborator.organization }}{% endif %}
+          </p>
+          {% if collaborator.bio %}
+            <p>{{ collaborator.bio }}</p>
+          {% endif %}
+          {% if collaborator.collaboration_message %}
+            <p class="collaboration-message">"{{ collaborator.collaboration_message }}"</p>
+          {% endif %}
+          <p class="collaborator-contact">Contact: {{ collaborator.email }}</p>
+        </article>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <h3>No collaborators yet</h3>
+        <p>Encourage your colleagues to share their interests or update your own profile.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

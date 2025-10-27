@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="page-header">
+    <h1>Explore datasets</h1>
+    <p>Browse community-curated datasets spanning biotech, climate science, healthcare, fintech, and beyond.</p>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('datasets.upload_dataset') }}" class="button primary">Upload a dataset</a>
+    {% else %}
+      <a href="{{ url_for('auth.register') }}" class="button primary">Join CrossField</a>
+    {% endif %}
+  </section>
+
+  <section class="filters">
+    <form method="get" class="filter-form">
+      <label for="type">Filter by dataset type</label>
+      <select name="type" id="type" onchange="this.form.submit()">
+        <option value="">All datasets</option>
+        {% for dataset_type in dataset_types %}
+          <option value="{{ dataset_type.id }}" {% if selected_type and selected_type.id == dataset_type.id %}selected{% endif %}>
+            {{ dataset_type.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </section>
+
+  <section class="dataset-grid">
+    {% if datasets %}
+      {% for dataset in datasets %}
+        <article class="dataset-card">
+          <h2><a href="{{ url_for('datasets.dataset_detail', dataset_id=dataset.id) }}">{{ dataset.name }}</a></h2>
+          <p class="dataset-meta">{{ dataset.dataset_type.name }} &middot; Added {{ dataset.created_at.strftime('%b %d, %Y') }}</p>
+          <p>{{ dataset.description|default('No description provided yet.')|truncate(180, True, '…') }}</p>
+          <p class="dataset-owner">Shared by {{ dataset.owner.username }}</p>
+        </article>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <h3>No datasets found</h3>
+        <p>Be the first to share a dataset in this category.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

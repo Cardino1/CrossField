@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Dataset types</h1>
+    <p>Dataset types help other researchers find relevant resources. Add new categories to reflect your domain.</p>
+
+    <form method="post" class="form">
+      <label for="name">Type name<span class="required">*</span></label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3"></textarea>
+
+      <button type="submit" class="button primary">Create dataset type</button>
+    </form>
+  </section>
+
+  <section class="dataset-types-list">
+    <h2>Available dataset types</h2>
+    <ul>
+      {% for dataset_type in dataset_types %}
+        <li>
+          <strong>{{ dataset_type.name }}</strong>
+          {% if dataset_type.description %}
+            <span>&mdash; {{ dataset_type.description }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

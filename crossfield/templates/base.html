@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title or "CrossField" }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1X7Y1gPcbwUb8f1TAh3c5ZrVQ4Z1p1rHtZH0W1Vk9FxhGa8jUKLRk2Y4Z1p1rHtZH0W1Vk9FxhGa8jUKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="branding">
+          <a href="{{ url_for('datasets.dashboard') }}" class="logo">CrossField</a>
+          <span class="tagline">Discover, share, and collaborate on datasets</span>
+        </div>
+        <nav class="site-nav">
+          <a href="{{ url_for('datasets.dashboard') }}">Datasets</a>
+          <a href="{{ url_for('datasets.manage_dataset_types') }}">Dataset types</a>
+          <a href="{{ url_for('collaborators.collaborator_directory') }}">Collaborators</a>
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('datasets.upload_dataset') }}" class="cta">Upload</a>
+            <a href="{{ url_for('collaborators.profile') }}">Profile</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+          {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="cta">Sign up</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+          <ul class="flash-messages">
+            {% for category, message in messages %}
+              <li class="flash-{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; {{ current_year or 2024 }} CrossField. Built to explore and grow the data ecosystem.</p>
+      </div>
+    </footer>
+  </body>
+</html>

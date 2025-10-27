@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Upload a dataset</h1>
+    <p>Share a dataset with the CrossField community. Provide a descriptive title, summary, and optionally upload a file.</p>
+
+    <form method="post" enctype="multipart/form-data" class="form">
+      <label for="name">Dataset name<span class="required">*</span></label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4"></textarea>
+
+      <label for="dataset_type">Dataset type<span class="required">*</span></label>
+      <select id="dataset_type" name="dataset_type" required>
+        <option value="" disabled selected>Select a dataset type</option>
+        {% for dataset_type in dataset_types %}
+          <option value="{{ dataset_type.id }}">{{ dataset_type.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="dataset_file">Upload file</label>
+      <input type="file" id="dataset_file" name="dataset_file" />
+
+      <button type="submit" class="button primary">Publish dataset</button>
+    </form>
+
+    <p class="form-footnote">Need a new category? <a href="{{ url_for('datasets.manage_dataset_types') }}">Create a dataset type</a>.</p>
+  </section>
+{% endblock %}
