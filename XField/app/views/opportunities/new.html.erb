@@ -1,0 +1,48 @@
+<section class="section">
+  <h1 class="section-title">Submit an Opportunity</h1>
+  <p>
+    Share a role, research collaboration, open source project, or co-founder search with the XField community.
+  </p>
+
+  <%= form_with model: @opportunity, local: true do |form| %>
+    <% if @opportunity.errors.any? %>
+      <div class="alert">
+        <p><strong>Please fix the following:</strong></p>
+        <ul>
+          <% @opportunity.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-grid two-column">
+      <div>
+        <%= form.label :opportunity_type, "Type" %>
+        <%= form.select :opportunity_type, Opportunity.opportunity_type_options, prompt: "Select type" %>
+      </div>
+      <div>
+        <%= form.label :title %>
+        <%= form.text_field :title, placeholder: "Opportunity title" %>
+      </div>
+      <div>
+        <%= form.label :full_name, "Your name" %>
+        <%= form.text_field :full_name, placeholder: "Full name" %>
+      </div>
+      <div>
+        <%= form.label :organization, "Organization" %>
+        <%= form.text_field :organization, placeholder: "Company or university" %>
+      </div>
+      <div class="full-width">
+        <%= form.label :description %>
+        <%= form.text_area :description, placeholder: "Describe the opportunity" %>
+      </div>
+      <div>
+        <%= form.label :link, "Link (optional)" %>
+        <%= form.url_field :link, placeholder: "https://" %>
+      </div>
+    </div>
+    <div>
+      <%= form.submit "Submit for review" %>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,26 @@
+<section class="section">
+  <h1 class="section-title">Admin Dashboard</h1>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Pending Opportunities</h3>
+      <p><%= @opportunities_pending.count %> awaiting review</p>
+      <%= link_to "Review now", admin_opportunities_path %>
+    </div>
+    <div class="card">
+      <h3>Recent Articles</h3>
+      <ul>
+        <% @recent_articles.each do |article| %>
+          <li><%= link_to article.title, admin_article_path(article) %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>New Subscribers</h3>
+      <ul>
+        <% @recent_subscribers.each do |user| %>
+          <li><%= user.email %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>

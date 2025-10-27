@@ -1,0 +1,102 @@
+<section class="hero">
+  <div class="badge">Discover today's top opportunities</div>
+  <h1>Track the latest in tech, funding, and collaboration.</h1>
+  <p>
+    XField curates the most promising opportunities across jobs, research, open source, and co-founder matchmaking while keeping you in the loop with investors and our latest news.
+  </p>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">Latest Opportunities</h2>
+    <%= link_to "Explore all", opportunities_path %>
+  </div>
+  <div class="grid grid-4">
+    <% @latest_opportunities.each do |opportunity| %>
+      <article class="card">
+        <span class="badge"><%= opportunity.opportunity_type_label %></span>
+        <h3><%= opportunity.title %></h3>
+        <p><strong><%= opportunity.organization %></strong></p>
+        <p><%= truncate(opportunity.description, length: 120) %></p>
+        <% if opportunity.link.present? %>
+          <p><%= link_to "Learn more", opportunity.link, target: "_blank", rel: "noopener" %></p>
+        <% end %>
+      </article>
+    <% end %>
+    <% if @latest_opportunities.empty? %>
+      <p>No opportunities published yet. Check back soon!</p>
+    <% end %>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2 class="section-title">Investor Partners</h2>
+    <%= link_to "Meet all investors", investors_path %>
+  </div>
+  <div class="grid grid-4">
+    <% @investors.each do |investor| %>
+      <article class="card">
+        <h3><%= investor.firm_name %></h3>
+        <p><%= truncate(investor.values, length: 90) %></p>
+        <% if investor.website.present? %>
+          <p><%= link_to "Visit website", investor.website, target: "_blank", rel: "noopener" %></p>
+        <% end %>
+      </article>
+    <% end %>
+    <% if @investors.empty? %>
+      <p>No investor profiles yet. Become the first partner!</p>
+    <% end %>
+  </div>
+</section>
+
+<section class="section" id="news">
+  <div class="section-header">
+    <h2 class="section-title">Latest News</h2>
+    <%= link_to "Read all articles", news_index_path %>
+  </div>
+  <div class="grid grid-3">
+    <% @latest_articles.each do |article| %>
+      <article class="card">
+        <span class="badge"><%= article.published_at.to_date.to_formatted_s(:long) %></span>
+        <h3><%= article.title %></h3>
+        <p><%= truncate(article.summary, length: 150) %></p>
+        <% if article.link.present? %>
+          <p><%= link_to "Read article", article.link, target: "_blank", rel: "noopener" %></p>
+        <% else %>
+          <p><em>Full article coming soon.</em></p>
+        <% end %>
+      </article>
+    <% end %>
+    <% if @latest_articles.empty? %>
+      <p>No news yet. Our editorial team is preparing something special.</p>
+    <% end %>
+  </div>
+</section>
+
+<section class="section" id="updates">
+  <div class="section-header">
+    <h2 class="section-title">Get Updates</h2>
+  </div>
+  <p>Join our curated list to get investor spotlights, fresh opportunities, and news delivered weekly.</p>
+  <%= form_with model: @subscription, url: subscriptions_path, local: true do |form| %>
+    <% if @subscription.errors.any? %>
+      <div class="alert">
+        <p><strong>Please fix the following:</strong></p>
+        <ul>
+          <% @subscription.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-grid two-column">
+      <div>
+        <%= form.email_field :email, placeholder: "Email address" %>
+      </div>
+      <div>
+        <%= form.submit "Subscribe" %>
+      </div>
+    </div>
+  <% end %>
+</section>

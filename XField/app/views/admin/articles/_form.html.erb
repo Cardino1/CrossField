@@ -1,0 +1,41 @@
+<%= form_with model: [:admin, @article], local: true do |form| %>
+  <% if @article.errors.any? %>
+    <div class="alert">
+      <p><strong>Please fix the following:</strong></p>
+      <ul>
+        <% @article.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-grid">
+    <div>
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
+    <div>
+      <%= form.label :author %>
+      <%= form.text_field :author %>
+    </div>
+    <div>
+      <%= form.label :published_at %>
+      <%= form.datetime_select :published_at %>
+    </div>
+    <div>
+      <%= form.label :summary %>
+      <%= form.text_area :summary %>
+    </div>
+    <div>
+      <%= form.label :content %>
+      <%= form.text_area :content %>
+    </div>
+    <div>
+      <%= form.label :link, "External link" %>
+      <%= form.url_field :link %>
+    </div>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

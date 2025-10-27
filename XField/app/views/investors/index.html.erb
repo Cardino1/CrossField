@@ -1,0 +1,89 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="section-title">Investor Partners</h1>
+  </div>
+  <p>Our venture partners support founders with capital, community, and conviction.</p>
+
+  <div class="grid grid-3">
+    <% @investors.each do |investor| %>
+      <article class="card">
+        <h3><%= investor.firm_name %></h3>
+        <div class="text-block">
+          <strong>Values:</strong>
+          <%= simple_format(investor.values) %>
+        </div>
+        <div class="text-block">
+          <strong>Investment focus:</strong>
+          <%= simple_format(investor.thesis) %>
+        </div>
+        <% if investor.portfolio_highlights.present? %>
+          <div class="text-block">
+            <strong>Portfolio:</strong>
+            <%= simple_format(investor.portfolio_highlights) %>
+          </div>
+        <% end %>
+        <div class="text-block">
+          <strong>Request for startups:</strong>
+          <%= simple_format(investor.request_for_startups) %>
+        </div>
+        <% if investor.website.present? %>
+          <p><%= link_to "Website", investor.website, target: "_blank", rel: "noopener" %></p>
+        <% end %>
+        <% if investor.contact_email.present? %>
+          <p><%= mail_to investor.contact_email, "Contact" %></p>
+        <% end %>
+      </article>
+    <% end %>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Create a page for your VC firm</h2>
+  <p>Showcase your values, the founders you back, and what you want to fund next.</p>
+
+  <%= form_with model: @investor, local: true do |form| %>
+    <% if @investor.errors.any? %>
+      <div class="alert">
+        <p><strong>Please fix the following:</strong></p>
+        <ul>
+          <% @investor.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-grid two-column">
+      <div>
+        <%= form.label :firm_name, "Firm name" %>
+        <%= form.text_field :firm_name %>
+      </div>
+      <div>
+        <%= form.label :values, "Values" %>
+        <%= form.text_area :values %>
+      </div>
+      <div>
+        <%= form.label :thesis, "What you're looking for" %>
+        <%= form.text_area :thesis %>
+      </div>
+      <div>
+        <%= form.label :portfolio_highlights, "Companies funded" %>
+        <%= form.text_area :portfolio_highlights %>
+      </div>
+      <div>
+        <%= form.label :request_for_startups, "Request for startups" %>
+        <%= form.text_area :request_for_startups %>
+      </div>
+      <div>
+        <%= form.label :website, "Website" %>
+        <%= form.url_field :website %>
+      </div>
+      <div>
+        <%= form.label :contact_email, "Contact email" %>
+        <%= form.email_field :contact_email %>
+      </div>
+    </div>
+    <div>
+      <%= form.submit "Submit for review" %>
+    </div>
+  <% end %>
+</section>
