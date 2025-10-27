@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <article class="dataset-detail">
+    <header>
+      <h1>{{ dataset.name }}</h1>
+      <p class="dataset-meta">{{ dataset.dataset_type.name }} dataset &middot; Published {{ dataset.created_at.strftime('%B %d, %Y') }}</p>
+      <p class="dataset-owner">Shared by {{ dataset.owner.username }}</p>
+    </header>
+
+    {% if dataset.description %}
+      <section class="dataset-description">
+        <h2>Description</h2>
+        <p>{{ dataset.description }}</p>
+      </section>
+    {% endif %}
+
+    {% if dataset.file_path %}
+      <section class="dataset-download">
+        <h2>Download</h2>
+        <p>You can download the dataset file to explore it locally.</p>
+        <a class="button primary" href="{{ url_for('datasets.download_file', filename=dataset.file_path) }}">
+          Download {{ dataset.file_original_name or 'dataset file' }}
+        </a>
+      </section>
+    {% endif %}
+  </article>
+{% endblock %}

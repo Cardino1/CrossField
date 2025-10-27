@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="form-card">
+    <h1>Your collaboration profile</h1>
+    <p>Share your interests and let others know you're open to collaborating.</p>
+
+    <form method="post" class="form">
+      <label for="organization">Organization</label>
+      <input type="text" id="organization" name="organization" value="{{ current_user.organization or '' }}" />
+
+      <label for="expertise">Expertise</label>
+      <input type="text" id="expertise" name="expertise" value="{{ current_user.expertise or '' }}" placeholder="e.g. genomics, carbon accounting" />
+
+      <label for="bio">Bio</label>
+      <textarea id="bio" name="bio" rows="4">{{ current_user.bio or '' }}</textarea>
+
+      <label for="collaboration_message">Collaboration message</label>
+      <textarea id="collaboration_message" name="collaboration_message" rows="3" placeholder="Let others know what you're looking for">{{ current_user.collaboration_message or '' }}</textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" id="is_looking" name="is_looking" {% if current_user.is_looking_for_collaborators %}checked{% endif %} />
+        I'm looking for collaborators
+      </label>
+
+      <button type="submit" class="button primary">Save preferences</button>
+    </form>
+  </section>
+{% endblock %}
